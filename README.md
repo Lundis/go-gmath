@@ -6,3 +6,4 @@ My opinions:
 - floats should be 32bit
 - code should be fast and straightforward
 - temporary heap allocations shouldn't be done
+- Y points down, not up.

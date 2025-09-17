@@ -6,7 +6,7 @@ import (
 )
 
 func TestRound(t *testing.T) {
-	for x := float32(-1); x < 1; x += 0.01 {
+	for x := float32(-2); x < 2; x += 0.01 {
 		actual := Round(x)
 		expected := math.Round(float64(x))
 		diff := float64(actual) - expected
@@ -15,8 +15,9 @@ func TestRound(t *testing.T) {
 		}
 	}
 }
+
 func TestRoundPos(t *testing.T) {
-	for x := float32(0); x < 1; x += 0.01 {
+	for x := float32(0); x < 2; x += 0.01 {
 		actual := RoundPos(x)
 		expected := math.Round(float64(x))
 		diff := float64(actual) - expected

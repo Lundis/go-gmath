@@ -92,17 +92,25 @@ func BenchmarkMathSin(b *testing.B) {
 
 func BenchmarkCosSin(b *testing.B) {
 	val := float32(-10)
+	sink := float32(0)
 	for b.Loop() {
-		CosSin(val)
+		cos, sin := CosSin(val)
+		sink += cos
+		sink += sin
 		val += 0.1
 	}
+	_ = sink
 }
 
-func BenchmarkCosAndSin(b *testing.B) {
+func BenchmarkMathSinCos(b *testing.B) {
 	val := float32(-10)
+	sink := float32(0)
 	for b.Loop() {
-		Cos(val)
-		Sin(val)
+		sin, cos := math.Sincos(float64(val))
+		sink += float32(cos)
+		sink += float32(sin)
+
 		val += 0.1
 	}
+	_ = sink
 }

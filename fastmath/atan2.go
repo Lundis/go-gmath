@@ -3,7 +3,7 @@ package fastmath
 import "math"
 
 // Atan2 returns an approximation of atan2(y, x) in radians.
-// Typical max error ~0.005 rad. Very fast and float32-friendly.
+// Typical max error ~0.005 rad.
 func Atan2(y, x float32) float32 {
 	y = -y
 	const (
