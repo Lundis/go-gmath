@@ -1,7 +1,7 @@
 package lerp
 
 import (
-	"github.com/lundis/go-gmath/vec2"
+	"github.com/Lundis/go-gmath/vec2"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

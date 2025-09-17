@@ -1,7 +1,7 @@
 package vec2
 
 import (
-	"github.com/lundis/go-gmath/fastmath"
+	"github.com/Lundis/go-gmath/fastmath"
 	"math"
 	"math/rand/v2"
 	"strconv"

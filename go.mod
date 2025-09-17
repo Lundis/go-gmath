@@ -1,4 +1,4 @@
-module github.com/lundis/go-gmath
+module github.com/Lundis/go-gmath
 
 go 1.24.3
 

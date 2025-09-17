@@ -1,6 +1,6 @@
 package gtypes
 
-import "github.com/lundis/go-gmath/vec2"
+import "github.com/Lundis/go-gmath/vec2"
 
 type Pixel = float32
 type Pixel2 = vec2.F

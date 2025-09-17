@@ -1,7 +1,7 @@
 package lerp
 
 import (
-	"github.com/lundis/go-gmath/vec2"
+	"github.com/Lundis/go-gmath/vec2"
 )
 
 func Lerp2(v1, v2 vec2.F, t float32) vec2.F {
