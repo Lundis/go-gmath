@@ -33,6 +33,10 @@ func (i I) Magnitude() float64 {
 	return math.Sqrt(float64(i.X*i.X + i.Y*i.Y))
 }
 
+func (i I) Area() int32 {
+	return i.X * i.Y
+}
+
 func (i I) Equals(other I) bool {
 	return i.X == other.X && i.Y == other.Y
 }
