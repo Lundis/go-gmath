@@ -244,6 +244,11 @@ func (v F) WithY(value float32) F {
 	return v
 }
 
+func (v F) NegatedY() F {
+	v.Y = -v.Y
+	return v
+}
+
 func (v F) Components() (x, y float32) {
 	return v.X, v.Y
 }
