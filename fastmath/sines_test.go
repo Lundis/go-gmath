@@ -42,6 +42,24 @@ func TestCosSinSmallNegative(t *testing.T) {
 }
 
 func TestCosSin(t *testing.T) {
+	explicitTestValues := []struct{ angle, expectedCos, expectedSin float32 }{
+		{0, 1, 0},
+		{math.Pi / 2, 0, -1},
+		{-math.Pi / 2, 0, 1},
+		{math.Pi, -1, 0},
+		{-math.Pi, -1, 0},
+	}
+	for _, test := range explicitTestValues {
+		actualCos, actualSin := CosSin(test.angle)
+		diff := float64(actualCos) - float64(test.expectedCos)
+		if math.Abs(diff) > 0.0001 {
+			t.Errorf("Cos(%f) = %f instead of %f. diff %f", test.angle, actualCos, test.expectedCos, diff)
+		}
+		diff = float64(actualSin) - float64(test.expectedSin)
+		if math.Abs(diff) > 0.0001 {
+			t.Errorf("Sin(%f) = %f instead of %f. diff %f", test.angle, actualSin, test.expectedSin, diff)
+		}
+	}
 	for i := -10; i < 10000; i++ {
 		angle := 2 * math.Pi * float32(i) / (10000 - 1)
 		actualCos, actualSin := CosSin(angle)

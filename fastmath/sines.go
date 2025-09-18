@@ -45,21 +45,20 @@ func Sin(angle float32) float32 {
 func CosSin(angle float32) (cos, sin float32) {
 	floatIndex, frac := Modf(float32(math.Abs(float64(angle/2/math.Pi))) * precision)
 	index := int32(floatIndex)
-	//indexSin := precision/4 + index
 
 	low := index % precision
 	high := low + 1
 	if high >= precision {
 		high -= precision
 	}
-	var lowSin int32
-	if low == 0 && angle < 0 {
-		lowSin = precision - precision/4
+	var lowSin = -low
+	if angle < 0 {
+		lowSin += precision - precision/4
 	} else {
-		lowSin = precision/4 - low
-		if lowSin < 0 {
-			lowSin += precision
-		}
+		lowSin += precision / 4
+	}
+	if lowSin < 0 {
+		lowSin += precision
 	}
 	highSin := lowSin - 1
 	if highSin < 0 {
