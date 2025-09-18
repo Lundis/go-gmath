@@ -168,15 +168,21 @@ func (v F) Angle() float32 {
 	return fastmath.Atan2(v.Y, v.X)
 }
 
-// AngleBetween calculates the angle between two vectors, returning a value in the range [-Pi, Pi].
-func (v F) AngleBetween(v2 F) float32 {
-	angle := v.Angle() - v2.Angle()
+// AngleBetweenLines calculates the angle between two lines starting at origo
+// returns values in the range [-Pi, Pi].
+func (v F) AngleBetweenLines(v2 F) float32 {
+	angle := v2.Angle() - v.Angle()
 	if angle > math.Pi {
 		angle -= 2 * math.Pi
 	} else if angle <= -math.Pi {
 		angle += 2 * math.Pi
 	}
 	return angle
+}
+
+// AngleTo returns the angle of the line v->v2
+func (v F) AngleTo(v2 F) float32 {
+	return v2.Minus(v).Angle()
 }
 
 func (v F) Abs() F {

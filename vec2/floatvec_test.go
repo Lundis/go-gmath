@@ -342,18 +342,33 @@ func TestSideOfLine(t *testing.T) {
 	assert.Greater(t, p3.SideOfLine(a, b), float32(0))
 }
 
-func TestAngleBetween(t *testing.T) {
-	up := F{0, 1}
-	upRight := F{1, 1}
+func TestAngleBetweenLines(t *testing.T) {
+	up := F{0, -1}
+	upRight := F{1, -1}
 	right := F{1, 0}
-	down := F{0, -1}
-	downLeft := F{-1, -1}
+	down := F{0, 1}
+	downLeft := F{-1, 1}
 
-	assert.Equal(t, float32(math.Pi/2), right.AngleBetween(up))
-	assert.Equal(t, float32(math.Pi/4), right.AngleBetween(upRight))
-	assert.Equal(t, float32(-math.Pi/2), up.AngleBetween(right))
-	assert.Equal(t, float32(math.Pi), up.AngleBetween(down))
-	assert.Equal(t, float32(math.Pi*3/4), up.AngleBetween(downLeft))
-	assert.Equal(t, float32(-math.Pi*3/4), downLeft.AngleBetween(up))
+	assert.Equal(t, float32(math.Pi/2), right.AngleBetweenLines(up))
+	assert.Equal(t, float32(math.Pi/4), right.AngleBetweenLines(upRight))
+	assert.Equal(t, float32(-math.Pi/2), up.AngleBetweenLines(right))
+	assert.Equal(t, float32(math.Pi), up.AngleBetweenLines(down))
+	assert.Equal(t, float32(math.Pi*3/4), up.AngleBetweenLines(downLeft))
+	assert.Equal(t, float32(-math.Pi*3/4), downLeft.AngleBetweenLines(up))
+}
 
+func TestAngleTo(t *testing.T) {
+	up := F{0, -1}
+	upRight := F{1, -1}
+	right := F{1, 0}
+	down := F{0, 1}
+	downLeft := F{-1, 1}
+
+	origo := F{0, 0}
+
+	assert.Equal(t, float32(0), origo.AngleTo(right))
+	assert.Equal(t, float32(math.Pi/4), origo.AngleTo(upRight))
+	assert.Equal(t, float32(math.Pi/2), origo.AngleTo(up))
+	assert.Equal(t, float32(-math.Pi/2), origo.AngleTo(down))
+	assert.Equal(t, float32(-math.Pi*3/4), origo.AngleTo(downLeft))
 }
