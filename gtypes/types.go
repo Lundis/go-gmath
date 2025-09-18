@@ -10,3 +10,5 @@ type WorldCoord2 = vec2.F
 
 type TileCoord = int32
 type TileCoord2 = vec2.I
+
+type Angle = float32
