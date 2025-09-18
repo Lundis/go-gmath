@@ -49,6 +49,7 @@ func (i I) IsBetweenInclusive(left, right I) bool {
 	return left.X <= i.X && i.X <= right.X &&
 		left.Y <= i.Y && i.Y <= right.Y
 }
+
 func (i I) Clamp(left, right I) I {
 	if i.X < left.X {
 		i.X = left.X
