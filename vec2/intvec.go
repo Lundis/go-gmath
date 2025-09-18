@@ -115,6 +115,6 @@ func (i I) Abs() I {
 	return i
 }
 
-func (i I) Index(width int) int {
-	return int(int32(width)*i.Y + i.X)
+func (i I) Index(width int32) int32 {
+	return width*i.Y + i.X
 }
