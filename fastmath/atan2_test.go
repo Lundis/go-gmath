@@ -6,6 +6,21 @@ import (
 )
 
 func TestAtan2(t *testing.T) {
+
+	explicitTestValues := []struct{ x, y, expectedAngle float32 }{
+		{-1, -1, math.Pi * 3 / 4},
+		{1, -1, math.Pi * 1 / 4},
+		{-1, 1, -math.Pi * 3 / 4},
+		{1, 1, -math.Pi * 1 / 4},
+	}
+	for _, test := range explicitTestValues {
+		actualAngle := Atan2(test.y, test.x)
+		diff := float64(actualAngle) - float64(test.expectedAngle)
+		if math.Abs(diff) > 0.0001 {
+			t.Errorf("Atan2(%f, %f) = %f instead of %f. diff %f", test.x, test.y, actualAngle, test.expectedAngle, diff)
+		}
+	}
+
 	for x := float32(-1); x < 1; x += 0.01 {
 		for y := float32(-1); y < 1; y += 0.01 {
 			actual := Atan2(y, x)
