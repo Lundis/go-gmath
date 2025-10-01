@@ -17,6 +17,9 @@ or
     Atan2          2.242 ns/op       4.131 ns/op
     math.Atan2     5.242 ns/op      18.270 ns/op
 
+    CopySign       2.135 ns/op       3.265 ns/op
+    math.CopySign  2.151 ns/op       1.000 ns/op
+
     math.Floor     1.000 ns/op       1.000 ns/op
 
     Log2           2.317 ns/op       3.314 ns/op
