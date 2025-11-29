@@ -7,132 +7,132 @@ import (
 	"strconv"
 )
 
-type F struct {
-	X, Y float32
+type D struct {
+	X, Y float64
 }
 
-func NewPolarF(angle, radius float32) F {
-	cos, sin := fastmath.CosSin(angle)
-	return F{X: cos, Y: sin}.MulScalar(radius)
+func NewPolarD(angle, radius float64) D {
+	cos, sin := fastmath.CosSinD(angle)
+	return D{X: cos, Y: sin}.MulScalar(radius)
 }
 
-func NewRandomF(minValue, maxValue float32) F {
+func NewRandomD(minValue, maxValue float64) D {
 	spread := maxValue - minValue
-	return F{
-		rand.Float32(),
-		rand.Float32(),
+	return D{
+		rand.Float64(),
+		rand.Float64(),
 	}.MulScalar(spread).AddScalar(minValue)
 }
 
-func (v F) AsDouble() D {
-	return D{X: float64(v.X), Y: float64(v.Y)}
-}
-
-func (v F) AsInt() I {
+func (v D) AsInt() I {
 	return I{X: int32(v.X), Y: int32(v.Y)}
 }
 
-func (v F) Equals(other F) bool {
+func (v D) AsFloat() F {
+	return F{X: float32(v.X), Y: float32(v.Y)}
+}
+
+func (v D) Equals(other D) bool {
 	return v.X == other.X && v.Y == other.Y
 }
 
-func (v F) IsZero() bool {
+func (v D) IsZero() bool {
 	return v.X == 0 && v.Y == 0
 }
 
-func (v F) String() string {
+func (v D) String() string {
 	var xString, yString string
-	if v.X == float32(int(v.X)) {
+	if v.X == float64(int(v.X)) {
 		xString = strconv.Itoa(int(v.X))
 	} else {
-		xString = strconv.FormatFloat(float64(v.X), 'f', 4, 32)
+		xString = strconv.FormatFloat(v.X, 'f', 4, 64)
 	}
-	if v.Y == float32(int(v.Y)) {
+	if v.Y == float64(int(v.Y)) {
 		yString = strconv.Itoa(int(v.Y))
 	} else {
-		yString = strconv.FormatFloat(float64(v.Y), 'f', 4, 32)
+		yString = strconv.FormatFloat(v.Y, 'f', 4, 64)
 	}
 	return "(" + xString + ", " + yString + ")"
 }
 
 // Self is useful if you want to build complex stuff with interfaces
-func (v F) Self() F {
+func (v D) Self() D {
 	return v
 }
 
-func (v F) Plus(other F) F {
+func (v D) Plus(other D) D {
 	v.X += other.X
 	v.Y += other.Y
 	return v
 }
 
-func (v F) AddScalar(scalar float32) F {
+func (v D) AddScalar(scalar float64) D {
 	return v.AddScalars(scalar, scalar)
 }
 
-func (v F) AddScalars(x, y float32) F {
+func (v D) AddScalars(x, y float64) D {
 	v.X += x
 	v.Y += y
 	return v
 }
 
-func (v F) Minus(other F) F {
+func (v D) Minus(other D) D {
 	v.X -= other.X
 	v.Y -= other.Y
 	return v
 }
 
-func (v F) SubScalar(scalar float32) F {
+func (v D) SubScalar(scalar float64) D {
 	return v.SubScalars(scalar, scalar)
 }
 
-func (v F) SubScalars(x, y float32) F {
+func (v D) SubScalars(x, y float64) D {
 	v.X -= x
 	v.Y -= y
 	return v
 }
 
-func (v F) Mul(other F) F {
+func (v D) Mul(other D) D {
 	v.X *= other.X
 	v.Y *= other.Y
 	return v
 }
 
-func (v F) MulScalar(scalar float32) F {
+func (v D) MulScalar(scalar float64) D {
 	return v.MulScalars(scalar, scalar)
 }
 
-func (v F) MulScalars(x, y float32) F {
+func (v D) MulScalars(x, y float64) D {
 	v.X *= x
 	v.Y *= y
 	return v
 }
 
-func (v F) Div(other F) F {
+func (v D) Div(other D) D {
 	v.X /= other.X
 	v.Y /= other.Y
 	return v
 }
 
-func (v F) DivScalar(scalar float32) F {
+func (v D) DivScalar(scalar float64) D {
 	return v.DivScalars(scalar, scalar)
 }
 
-func (v F) DivScalars(x, y float32) F {
+func (v D) DivScalars(x, y float64) D {
 	v.X /= x
 	v.Y /= y
 	return v
 }
 
-func (v F) Magnitude() float32 {
-	return fastmath.Sqrt(v.X*v.X + v.Y*v.Y)
+func (v D) Magnitude() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }
 
-func (v F) DistanceTo(v2 F) float32 {
+func (v D) DistanceTo(v2 D) float64 {
 	return v.Minus(v2).Magnitude()
 }
 
-func (v F) DistanceToLine(a, b F) float32 {
+func (v D) DistanceToLine(a, b D) float64 {
 	ab := b.Minus(a)
 	ap := v.Minus(a)
 
@@ -146,19 +146,19 @@ func (v F) DistanceToLine(a, b F) float32 {
 }
 
 // SideOfLine calculates which side of the line A->B the point P lies on. Check the sign of the response.
-func (v F) SideOfLine(a, b F) float32 {
+func (v D) SideOfLine(a, b D) float64 {
 	ab := b.Minus(a)
 	ap := v.Minus(a)
 
 	return ab.Cross(ap)
 }
 
-func (v F) DistanceToSquared(v2 F) float32 {
+func (v D) DistanceToSquared(v2 D) float64 {
 	diff := v.Minus(v2)
 	return diff.X*diff.X + diff.Y*diff.Y
 }
 
-func (v F) Normalized() F {
+func (v D) Normalized() D {
 	m := v.Magnitude()
 
 	if m > 0.0 {
@@ -168,13 +168,13 @@ func (v F) Normalized() F {
 	}
 }
 
-func (v F) Angle() float32 {
-	return fastmath.Atan2(v.Y, v.X)
+func (v D) Angle() float64 {
+	return fastmath.Atan2D(v.Y, v.X)
 }
 
 // AngleBetweenLines calculates the angle between two lines starting at origo
 // returns values in the range [-Pi, Pi].
-func (v F) AngleBetweenLines(v2 F) float32 {
+func (v D) AngleBetweenLines(v2 D) float64 {
 	angle := v2.Angle() - v.Angle()
 	if angle > math.Pi {
 		angle -= 2 * math.Pi
@@ -185,102 +185,102 @@ func (v F) AngleBetweenLines(v2 F) float32 {
 }
 
 // AngleTo returns the angle of the line v->v2
-func (v F) AngleTo(v2 F) float32 {
+func (v D) AngleTo(v2 D) float64 {
 	return v2.Minus(v).Angle()
 }
 
-func (v F) Abs() F {
-	v.X = float32(math.Abs(float64(v.X)))
-	v.Y = float32(math.Abs(float64(v.Y)))
+func (v D) Abs() D {
+	v.X = math.Abs(v.X)
+	v.Y = math.Abs(v.Y)
 	return v
 }
 
-func (v F) Clamp(low, high F) F {
+func (v D) Clamp(low, high D) D {
 	return low.Max(v.Min(high))
 }
 
-func (v F) Min(v2 F) F {
+func (v D) Min(v2 D) D {
 	v.X = min(v.X, v2.X)
 	v.Y = min(v.Y, v2.Y)
 	return v
 }
-func (v F) Max(v2 F) F {
+func (v D) Max(v2 D) D {
 	v.X = max(v.X, v2.X)
 	v.Y = max(v.Y, v2.Y)
 	return v
 }
 
-func (v F) Round() F {
-	v.X = float32(math.Round(float64(v.X)))
-	v.Y = float32(math.Round(float64(v.Y)))
+func (v D) Round() D {
+	v.X = math.Round(v.X)
+	v.Y = math.Round(v.Y)
 	return v
 }
 
-func (v F) Floor() F {
-	v.X = float32(int(v.X))
-	v.Y = float32(int(v.Y))
+func (v D) Dloor() D {
+	v.X = float64(int(v.X))
+	v.Y = float64(int(v.Y))
 	return v
 }
 
-func (v F) Ceil() F {
-	v.X = float32(math.Ceil(float64(v.X)))
-	v.Y = float32(math.Ceil(float64(v.Y)))
+func (v D) Ceil() D {
+	v.X = math.Ceil(v.X)
+	v.Y = math.Ceil(v.Y)
 	return v
 }
 
-func (v F) Swap() F {
+func (v D) Swap() D {
 	v.X, v.Y = v.Y, v.X
 	return v
 }
 
-func (v F) Perpendicular() F {
+func (v D) Perpendicular() D {
 	v.X, v.Y = v.Y, -v.X
 	return v
 }
 
-func (v F) WithX(value float32) F {
+func (v D) WithX(value float64) D {
 	v.X = value
 	return v
 }
 
-func (v F) WithY(value float32) F {
+func (v D) WithY(value float64) D {
 	v.Y = value
 	return v
 }
 
-func (v F) NegatedY() F {
+func (v D) NegatedY() D {
 	v.Y = -v.Y
 	return v
 }
 
-func (v F) Components() (x, y float32) {
+func (v D) Components() (x, y float64) {
 	return v.X, v.Y
 }
 
-func (v F) Rotate(angle float32) F {
-	cos, sin := fastmath.CosSin(angle)
-	return F{
+func (v D) Rotate(angle float64) D {
+	cos, sin := fastmath.CosSinD(angle)
+	return D{
 		X: v.X*cos + v.Y*-sin,
 		Y: v.X*sin + v.Y*cos,
 	}
 }
 
-func (v F) IsBetween(left, right F) bool {
+func (v D) IsBetween(left, right D) bool {
 	return left.X <= v.X && v.X <= right.X &&
 		left.Y <= v.Y && v.Y <= right.Y
 }
 
-func (v F) Cross(other F) float32 {
+func (v D) Cross(other D) float64 {
 	return v.X*other.Y - v.Y*other.X
 }
 
-func (v F) Dot(other F) float32 {
+func (v D) Dot(other D) float64 {
 	return v.X*other.X + v.Y*other.Y
 }
 
-func (v F) Reflect(other F) F {
+func (v D) Reflect(other D) D {
 	factor := -2 * v.Dot(other)
-	return F{
+	return D{
 		X: factor*v.X + other.X,
 		Y: factor*v.Y + other.Y,
 	}
