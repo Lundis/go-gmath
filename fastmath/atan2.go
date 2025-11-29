@@ -47,3 +47,49 @@ func Atan2(y, x float32) float32 {
 	}
 	return angle
 }
+
+// Atan2D returns an approximation of atan2(y, x) in radians.
+// Typical max error ~0.005 rad.
+func Atan2D(y, x float64) float64 {
+	y = -y
+	const (
+		c   = float64(0.273) // tweakable shaping constant
+		pi  = float64(math.Pi)
+		pi2 = float64(math.Pi / 2)
+		pi4 = float64(math.Pi / 4)
+	)
+
+	ax := x
+	if ax < 0 {
+		ax = -ax
+	}
+	ay := y
+	if ay < 0 {
+		ay = -ay
+	}
+
+	// Handle (0,0) to avoid division by zero.
+	if ax+ay == 0 {
+		return 0
+	}
+
+	var r, angle float64
+	if ax > ay {
+		// angle in [0, π/4]
+		r = ay / ax
+		angle = r * (pi4 + c*(1-r))
+	} else {
+		// angle in (π/4, π/2]
+		r = ax / ay
+		angle = pi2 - r*(pi4+c*(1-r))
+	}
+
+	// Quadrant corrections
+	if x < 0 {
+		angle = pi - angle
+	}
+	if y < 0 {
+		angle = -angle
+	}
+	return angle
+}
