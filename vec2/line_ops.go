@@ -1,5 +1,7 @@
 package vec2
 
+import "github.com/Lundis/go-gmath/fastmath"
+
 // LineIntersection calculates the (extended) intersection between lines A-B and C-D
 func LineIntersection(A, B, C, D F) F {
 	// https://www.gamers.org/dEngine/rsc/usenet/comp.graphics.algorithms.faq
@@ -38,4 +40,62 @@ func IntersectsLineExclusive(A, B, C, D F) bool {
 	cross4 := (D.X-C.X)*(B.Y-C.Y) - (D.Y-C.Y)*(B.X-C.X)
 
 	return cross3*cross4 < 0
+}
+
+// IntersectsInfiniteLineCircle returns true if an infinite line segment A-B intersects circle with given center and radius
+// Based on https://mathworld.wolfram.com/Circle-LineIntersection.html
+func IntersectsInfiniteLineCircle(A, B, center F, radius float32) bool {
+	// Translate line segment to origin
+	Ax := A.X - center.X
+	Ay := A.Y - center.Y
+	Bx := B.X - center.X
+	By := B.Y - center.Y
+
+	// Line segment vector
+	dx := Bx - Ax
+	dy := By - Ay
+
+	dr := fastmath.Sqrt(dx*dx + dy*dy)
+	D := Ax*By - Bx*Ay
+
+	discriminant := radius*radius*dr*dr - D*D
+	return discriminant >= 0
+}
+
+func IntersectsLineCircleInclusive(A, B, center F, radius float32) bool {
+	// Translate line segment to origin (relative to circle center)
+	Ax := A.X - center.X
+	Ay := A.Y - center.Y
+	Bx := B.X - center.X
+	By := B.Y - center.Y
+
+	radiusSq := radius * radius
+
+	// Check if either endpoint is inside or on the circle
+	distASq := Ax*Ax + Ay*Ay
+	distBSq := Bx*Bx + By*By
+	if distASq <= radiusSq || distBSq <= radiusSq {
+		return true
+	}
+
+	// Line segment vector
+	dx := Bx - Ax
+	dy := By - Ay
+
+	// Find closest point on line segment to circle center (at origin)
+	// Parameter t represents position along line segment (0 = A, 1 = B)
+	t := -(Ax*dx + Ay*dy) / (dx*dx + dy*dy)
+
+	// closest point is outside segment
+	if t < 0 || t > 1 {
+		return false
+	}
+
+	// Calculate closest point on segment
+	closestX := Ax + t*dx
+	closestY := Ay + t*dy
+
+	// Check if closest point is within or on the circle
+	distSq := closestX*closestX + closestY*closestY
+	return distSq <= radiusSq
 }

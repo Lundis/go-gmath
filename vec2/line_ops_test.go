@@ -1,8 +1,9 @@
 package vec2
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestLineIntersection(t *testing.T) {
@@ -290,5 +291,87 @@ func BenchmarkIntersectsLineExclusive(b *testing.B) {
 		B.Y += 0.001
 		C.Y += 0.001
 		D.X += 0.001
+	}
+}
+
+func TestIntersectsLineCircle(t *testing.T) {
+	t.Run("center=0, line starts inside circle", func(t *testing.T) {
+		A := F{X: 0, Y: 0}
+		B := F{X: 10, Y: 0}
+		C := F{X: 0, Y: 0}
+
+		assert.True(t, IntersectsInfiniteLineCircle(A, B, C, 1))
+		assert.True(t, IntersectsLineCircleInclusive(A, B, C, 1))
+	})
+	t.Run("center=0, line is fully inside circle", func(t *testing.T) {
+		A := F{X: -0.5, Y: 0}
+		B := F{X: 0.5, Y: 0}
+		C := F{X: 0, Y: 0}
+
+		assert.True(t, IntersectsInfiniteLineCircle(A, B, C, 1))
+		assert.True(t, IntersectsLineCircleInclusive(A, B, C, 1))
+	})
+	t.Run("center=0, line does not intersect", func(t *testing.T) {
+		A := F{X: -10, Y: 2}
+		B := F{X: 10, Y: 2}
+		C := F{X: 0, Y: 0}
+
+		assert.False(t, IntersectsInfiniteLineCircle(A, B, C, 1))
+		assert.False(t, IntersectsLineCircleInclusive(A, B, C, 1))
+	})
+	t.Run("center=0, line y=0", func(t *testing.T) {
+		A := F{X: -10, Y: 0}
+		B := F{X: 10, Y: 0}
+		C := F{X: 0, Y: 0}
+
+		assert.True(t, IntersectsInfiniteLineCircle(A, B, C, 1))
+		assert.True(t, IntersectsLineCircleInclusive(A, B, C, 1))
+	})
+	t.Run("center=0, line x=0", func(t *testing.T) {
+		A := F{X: 0, Y: -10}
+		B := F{X: 0, Y: 10}
+		C := F{X: 0, Y: 0}
+
+		assert.True(t, IntersectsInfiniteLineCircle(A, B, C, 1))
+		assert.True(t, IntersectsLineCircleInclusive(A, B, C, 1))
+	})
+	t.Run("center=0, tangent line", func(t *testing.T) {
+		A := F{X: -10, Y: 1}
+		B := F{X: 10, Y: 1}
+		C := F{X: 0, Y: 0}
+
+		assert.True(t, IntersectsInfiniteLineCircle(A, B, C, 1))
+		assert.True(t, IntersectsLineCircleInclusive(A, B, C, 1))
+	})
+	t.Run("center=1, tangent line", func(t *testing.T) {
+		A := F{X: -10, Y: 0}
+		B := F{X: 10, Y: 0}
+		C := F{X: 1, Y: 1}
+
+		assert.True(t, IntersectsInfiniteLineCircle(A, B, C, 1))
+		assert.True(t, IntersectsLineCircleInclusive(A, B, C, 1))
+	})
+	t.Run("center=0, finite line does not intersect", func(t *testing.T) {
+		A := F{X: 2, Y: 1}
+		B := F{X: 10, Y: 1}
+		C := F{X: 0, Y: 0}
+
+		assert.True(t, IntersectsInfiniteLineCircle(A, B, C, 1))
+		assert.False(t, IntersectsLineCircleInclusive(A, B, C, 1))
+	})
+}
+
+func BenchmarkIntersectsInfiniteLineCircleInclusive(b *testing.B) {
+	A := F{X: 2, Y: 0}
+	B := F{X: 10, Y: 0}
+	C := F{X: 0, Y: 0}
+
+	for b.Loop() {
+		_ = IntersectsInfiniteLineCircle(A, B, C, 1)
+		A.X += 0.001
+		A.Y += 0.001
+		B.X += 0.001
+		B.Y += 0.001
+		C.Y += 0.001
 	}
 }
