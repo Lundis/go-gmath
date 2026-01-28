@@ -1,9 +1,10 @@
 package vec2
 
 import (
-	"github.com/stretchr/testify/assert"
 	"math"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNewPolarF(t *testing.T) {
@@ -21,6 +22,24 @@ func TestNewPolarF(t *testing.T) {
 	assert.Equal(t, float32(0), left.Y)
 
 	down := NewPolarF(1.5*math.Pi, 1000).Round()
+	assert.Equal(t, float32(0), down.X)
+	assert.Equal(t, float32(1000), down.Y)
+}
+func TestNewPolarFFast(t *testing.T) {
+	right := NewPolarFFast(0, 1000).Round()
+
+	assert.Equal(t, float32(1000), right.X)
+	assert.Equal(t, float32(0), right.Y)
+
+	up := NewPolarFFast(0.5*math.Pi, 1000).Round()
+	assert.Equal(t, float32(0), up.X)
+	assert.Equal(t, float32(-1000), up.Y)
+
+	left := NewPolarFFast(1*math.Pi, 1000).Round()
+	assert.Equal(t, float32(-1000), left.X)
+	assert.Equal(t, float32(0), left.Y)
+
+	down := NewPolarFFast(1.5*math.Pi, 1000).Round()
 	assert.Equal(t, float32(0), down.X)
 	assert.Equal(t, float32(1000), down.Y)
 }

@@ -42,7 +42,8 @@ or
     Sin            2.753 ns/op       9.340 ns/op
     math.Sin       4.260 ns/op      14.100 ns/op
 
-    CosSin         3.953 ns/op      11.590 ns/op
-    math.SinCos    4.787 ns/op      14.430 ns/op
+    CosSinFast     2.343 ns/op       4.821 ns/op
+    CosSin         4.017 ns/op      11.590 ns/op
+    math.SinCos    4.986 ns/op      14.430 ns/op
 
     math.Sqrt      2.203 ns/op       2.231 ns/op

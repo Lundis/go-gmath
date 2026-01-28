@@ -1,10 +1,11 @@
 package vec2
 
 import (
-	"github.com/Lundis/go-gmath/fastmath"
 	"math"
 	"math/rand/v2"
 	"strconv"
+
+	"github.com/Lundis/go-gmath/fastmath"
 )
 
 type F struct {
@@ -13,7 +14,12 @@ type F struct {
 
 func NewPolarF(angle, radius float32) F {
 	cos, sin := fastmath.CosSin(angle)
-	return F{X: cos, Y: sin}.MulScalar(radius)
+	return F{X: cos * radius, Y: sin * radius}
+}
+
+func NewPolarFFast(angle, radius float32) F {
+	cos, sin := fastmath.CosSinFast(angle)
+	return F{X: cos * radius, Y: sin * radius}
 }
 
 func NewRandomF(minValue, maxValue float32) F {
