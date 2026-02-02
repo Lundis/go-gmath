@@ -25,7 +25,7 @@ func (i I) Components() (x, y int32) {
 	return i.X, i.Y
 }
 
-func (i I) Plus(other I) I {
+func (i I) Add(other I) I {
 	return I{X: i.X + other.X, Y: i.Y + other.Y}
 }
 
@@ -33,7 +33,7 @@ func (i I) AddScalars(x, y int32) I {
 	return I{X: i.X + x, Y: i.Y + y}
 }
 
-func (i I) Minus(other I) I {
+func (i I) Sub(other I) I {
 	return I{X: i.X - other.X, Y: i.Y - other.Y}
 }
 
