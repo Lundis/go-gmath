@@ -76,7 +76,7 @@ func TestIsZero(t *testing.T) {
 func TestPlus(t *testing.T) {
 	a := F{1, 2}
 	b := F{4, 3}
-	res := a.Plus(b)
+	res := a.Add(b)
 
 	assert.Equal(t, float32(5), res.X)
 	assert.Equal(t, float32(5), res.Y)
@@ -101,7 +101,7 @@ func TestAddScalars(t *testing.T) {
 func TestMinus(t *testing.T) {
 	a := F{1, 2}
 	b := F{4, 3}
-	res := a.Minus(b)
+	res := a.Sub(b)
 
 	assert.Equal(t, float32(-3), res.X)
 	assert.Equal(t, float32(-1), res.Y)

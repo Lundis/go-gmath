@@ -49,7 +49,7 @@ func (v F) String() string {
 	return "(" + xString + ", " + yString + ", " + zString + ")"
 }
 
-func (v F) Plus(other F) F {
+func (v F) Add(other F) F {
 	v.X += other.X
 	v.Y += other.Y
 	v.Z += other.Z
@@ -67,7 +67,7 @@ func (v F) AddScalars(x, y, z float32) F {
 	return v
 }
 
-func (v F) Minus(other F) F {
+func (v F) Sub(other F) F {
 	v.X -= other.X
 	v.Y -= other.Y
 	v.Z -= other.Z
@@ -126,12 +126,12 @@ func (v F) Magnitude() float32 {
 }
 
 func (v F) DistanceTo(v2 F) float32 {
-	return v.Minus(v2).Magnitude()
+	return v.Sub(v2).Magnitude()
 }
 
 func (v F) DistanceToLine(a, b F) float32 {
-	ab := b.Minus(a)
-	ap := v.Minus(a)
+	ab := b.Sub(a)
+	ap := v.Sub(a)
 
 	cross := ab.Cross(ap)
 
@@ -139,7 +139,7 @@ func (v F) DistanceToLine(a, b F) float32 {
 }
 
 func (v F) DistanceToSquared(v2 F) float32 {
-	diff := v.Minus(v2)
+	diff := v.Sub(v2)
 	return diff.X*diff.X + diff.Y*diff.Y + diff.Z*diff.Z
 }
 

@@ -61,7 +61,7 @@ func (v D) String() string {
 	return "(" + xString + ", " + yString + ")"
 }
 
-func (v D) Plus(other D) D {
+func (v D) Add(other D) D {
 	v.X += other.X
 	v.Y += other.Y
 	return v
@@ -77,7 +77,7 @@ func (v D) AddScalars(x, y float64) D {
 	return v
 }
 
-func (v D) Minus(other D) D {
+func (v D) Sub(other D) D {
 	v.X -= other.X
 	v.Y -= other.Y
 	return v
@@ -130,12 +130,12 @@ func (v D) Magnitude() float64 {
 }
 
 func (v D) DistanceTo(v2 D) float64 {
-	return v.Minus(v2).Magnitude()
+	return v.Sub(v2).Magnitude()
 }
 
 func (v D) DistanceToLine(a, b D) float64 {
-	ab := b.Minus(a)
-	ap := v.Minus(a)
+	ab := b.Sub(a)
+	ap := v.Sub(a)
 
 	cross := ab.Cross(ap)
 
@@ -148,14 +148,14 @@ func (v D) DistanceToLine(a, b D) float64 {
 
 // SideOfLine calculates which side of the line A->B the point P lies on. Check the sign of the response.
 func (v D) SideOfLine(a, b D) float64 {
-	ab := b.Minus(a)
-	ap := v.Minus(a)
+	ab := b.Sub(a)
+	ap := v.Sub(a)
 
 	return ab.Cross(ap)
 }
 
 func (v D) DistanceToSquared(v2 D) float64 {
-	diff := v.Minus(v2)
+	diff := v.Sub(v2)
 	return diff.X*diff.X + diff.Y*diff.Y
 }
 
@@ -187,7 +187,7 @@ func (v D) AngleBetweenLines(v2 D) float64 {
 
 // AngleTo returns the angle of the line v->v2
 func (v D) AngleTo(v2 D) float64 {
-	return v2.Minus(v).Angle()
+	return v2.Sub(v).Angle()
 }
 
 func (v D) Abs() D {

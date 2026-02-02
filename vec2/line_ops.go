@@ -16,7 +16,7 @@ func LineIntersection(A, B, C, D F) F {
 		return A
 	}
 	r := r_numerator / r_denomenator
-	return A.Plus(B.Minus(A).MulScalar(r))
+	return A.Add(B.Sub(A).MulScalar(r))
 }
 
 // IntersectsLineExclusive returns true if line segments A-B and C-D intersect (excluding endpoints)
