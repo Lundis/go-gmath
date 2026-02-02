@@ -49,11 +49,6 @@ func (v F) String() string {
 	return "(" + xString + ", " + yString + ", " + zString + ")"
 }
 
-// Self is useful if you want to build complex stuff with interfaces
-func (v F) Self() F {
-	return v
-}
-
 func (v F) Plus(other F) F {
 	v.X += other.X
 	v.Y += other.Y
