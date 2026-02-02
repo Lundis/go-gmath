@@ -13,6 +13,10 @@ func (i I) AsFloat() F {
 	return F{X: float32(i.X), Y: float32(i.Y)}
 }
 
+func (i I) AsDouble() D {
+	return D{X: float64(i.X), Y: float64(i.Y)}
+}
+
 func (i I) Components() (x, y int32) {
 	return i.X, i.Y
 }

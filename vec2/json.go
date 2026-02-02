@@ -33,7 +33,7 @@ func (v *F) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (v *I) UnmarshalJSON(data []byte) error {
+func (i *I) UnmarshalJSON(data []byte) error {
 	var tmp [2]int32
 	if err := json.Unmarshal(data, &tmp); err != nil {
 		type Alias I
@@ -42,11 +42,11 @@ func (v *I) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &alias); err != nil {
 			return err
 		}
-		*v = I(alias)
+		*i = I(alias)
 		return nil
 	}
-	v.X = tmp[0]
-	v.Y = tmp[1]
+	i.X = tmp[0]
+	i.Y = tmp[1]
 	return nil
 }
 
