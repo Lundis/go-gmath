@@ -271,7 +271,7 @@ func (v F) Rotate(angle float32) F {
 	}
 }
 
-func (v F) IsBetween(left, right F) bool {
+func (v F) IsBetweenInclusive(left, right F) bool {
 	return left.X <= v.X && v.X <= right.X &&
 		left.Y <= v.Y && v.Y <= right.Y
 }

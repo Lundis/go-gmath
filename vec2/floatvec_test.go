@@ -296,9 +296,9 @@ func TestIsBetweenInclusive(t *testing.T) {
 	b := F{3, 6}
 	c := F{5, 10}
 
-	assert.Equal(t, false, a.IsBetween(b, c))
-	assert.Equal(t, true, b.IsBetween(a, c))
-	assert.Equal(t, false, c.IsBetween(a, b))
+	assert.Equal(t, false, a.IsBetweenInclusive(b, c))
+	assert.Equal(t, true, b.IsBetweenInclusive(a, c))
+	assert.Equal(t, false, c.IsBetweenInclusive(a, b))
 }
 
 func TestDot(t *testing.T) {

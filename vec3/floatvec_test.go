@@ -1,8 +1,9 @@
 package vec3
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNewRandomF(t *testing.T) {
@@ -238,9 +239,9 @@ func TestIsBetweenInclusive(t *testing.T) {
 	b := F{3, 6, 10}
 	c := F{5, 10, 13}
 
-	assert.Equal(t, false, a.IsBetween(b, c))
-	assert.Equal(t, true, b.IsBetween(a, c))
-	assert.Equal(t, false, c.IsBetween(a, b))
+	assert.Equal(t, false, a.IsBetweenInclusive(b, c))
+	assert.Equal(t, true, b.IsBetweenInclusive(a, c))
+	assert.Equal(t, false, c.IsBetweenInclusive(a, b))
 }
 
 func TestDot(t *testing.T) {

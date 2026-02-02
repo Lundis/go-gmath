@@ -21,7 +21,7 @@ func (i I) Plus(other I) I {
 	return I{X: i.X + other.X, Y: i.Y + other.Y}
 }
 
-func (i I) Add(x, y int32) I {
+func (i I) AddScalars(x, y int32) I {
 	return I{X: i.X + x, Y: i.Y + y}
 }
 

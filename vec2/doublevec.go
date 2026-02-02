@@ -1,10 +1,11 @@
 package vec2
 
 import (
-	"github.com/Lundis/go-gmath/fastmath"
 	"math"
 	"math/rand/v2"
 	"strconv"
+
+	"github.com/Lundis/go-gmath/fastmath"
 )
 
 type D struct {
@@ -216,7 +217,7 @@ func (v D) Round() D {
 	return v
 }
 
-func (v D) Dloor() D {
+func (v D) Floor() D {
 	v.X = float64(int(v.X))
 	v.Y = float64(int(v.Y))
 	return v
@@ -265,7 +266,7 @@ func (v D) Rotate(angle float64) D {
 	}
 }
 
-func (v D) IsBetween(left, right D) bool {
+func (v D) IsBetweenInclusive(left, right D) bool {
 	return left.X <= v.X && v.X <= right.X &&
 		left.Y <= v.Y && v.Y <= right.Y
 }
