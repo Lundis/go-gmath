@@ -90,3 +90,13 @@ func CosSinFast(angle float32) (cos, sin float32) {
 
 	return cosSinTable[2*index], cosSinTable[2*index+1]
 }
+
+// CosSinFastD is superfast, but doesn't interpolate, so it will return the same value for multiple close input angles
+// The error is <0.0004
+func CosSinFastD(angle float64) (cos, sin float64) {
+	index := int(angle*cosSinPrecision/2/math.Pi) % cosSinPrecision
+	// handle negative angles
+	index = (index + cosSinPrecision) % cosSinPrecision
+
+	return float64(cosSinTable[2*index]), float64(cosSinTable[2*index+1])
+}

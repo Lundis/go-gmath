@@ -17,6 +17,11 @@ func NewPolarD(angle, radius float64) D {
 	return D{X: cos, Y: sin}.MulScalar(radius)
 }
 
+func NewPolarDFast(angle, radius float64) D {
+	cos, sin := fastmath.CosSinFastD(angle)
+	return D{X: cos * radius, Y: sin * radius}
+}
+
 func NewRandomD(minValue, maxValue float64) D {
 	spread := maxValue - minValue
 	return D{
