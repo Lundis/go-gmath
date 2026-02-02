@@ -17,6 +17,10 @@ func (i I) AsDouble() D {
 	return D{X: float64(i.X), Y: float64(i.Y)}
 }
 
+func (i I) IsZero() bool {
+	return i.X == 0 && i.Y == 0
+}
+
 func (i I) Components() (x, y int32) {
 	return i.X, i.Y
 }
