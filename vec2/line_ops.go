@@ -99,3 +99,51 @@ func IntersectsLineCircleInclusive(A, B, center F, radius float32) bool {
 	distSq := closestX*closestX + closestY*closestY
 	return distSq <= radiusSq
 }
+
+// ClosestPointOnLineSegmentF returns the point on the line a-b closest to target.
+// t is the ratio between a and b of that point
+func ClosestPointOnLineSegmentF(a, b, target F) (closest F, t float32) {
+	ab := b.Sub(a)
+	at := target.Sub(a)
+	t = at.Dot(ab) / ab.Dot(ab)
+	if t < 0 {
+		t = 0
+	} else if t > 1 {
+		t = 1
+	}
+	closest = a.Add(ab.MulScalar(t))
+	return
+}
+
+// ClosestPointOnLineSegmentD returns the point on the line a-b closest to target.
+// t is the ratio between a and b of that point
+func ClosestPointOnLineSegmentD(a, b, target D) (closest D, t float64) {
+	ab := b.Sub(a)
+	at := target.Sub(a)
+	t = at.Dot(ab) / ab.Dot(ab)
+	if t < 0 {
+		t = 0
+	} else if t > 1 {
+		t = 1
+	}
+	closest = a.Add(ab.MulScalar(t))
+	return
+}
+
+// ClosestPointOnLineF returns the point on the infinite line a-b closest to target
+func ClosestPointOnLineF(a, b, target F) (closest F) {
+	ab := b.Sub(a)
+	at := target.Sub(a)
+	t := at.Dot(ab) / ab.Dot(ab)
+	closest = a.Add(ab.MulScalar(t))
+	return
+}
+
+// ClosestPointOnLineD returns the point on the infinite line a-b closest to target
+func ClosestPointOnLineD(a, b, target D) (closest D) {
+	ab := b.Sub(a)
+	at := target.Sub(a)
+	t := at.Dot(ab) / ab.Dot(ab)
+	closest = a.Add(ab.MulScalar(t))
+	return
+}

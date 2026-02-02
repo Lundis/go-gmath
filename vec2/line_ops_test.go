@@ -375,3 +375,38 @@ func BenchmarkIntersectsInfiniteLineCircleInclusive(b *testing.B) {
 		C.Y += 0.001
 	}
 }
+
+func TestClosestPointOnLineF(t *testing.T) {
+	t.Run(".\\", func(t *testing.T) {
+		A := F{X: 0, Y: 2}
+		B := F{X: 2, Y: 0}
+		P := F{X: 0, Y: 0}
+
+		assert.Equal(t, F{1, 1}, ClosestPointOnLineF(A, B, P))
+	})
+	t.Run(". __ (infinite)", func(t *testing.T) {
+		A := F{X: 1, Y: 0}
+		B := F{X: 2, Y: 0}
+		P := F{X: 0.5, Y: 0}
+
+		assert.Equal(t, F{0.5, 0}, ClosestPointOnLineF(A, B, P))
+	})
+	t.Run(". __ (finite)", func(t *testing.T) {
+		A := F{X: 1, Y: 0}
+		B := F{X: 2, Y: 0}
+		P := F{X: 0.5, Y: 0}
+
+		closest, ratio := ClosestPointOnLineSegmentF(A, B, P)
+		assert.Equal(t, F{1, 0}, closest)
+		assert.Equal(t, float32(0), ratio)
+	})
+	t.Run("_._ (finite)", func(t *testing.T) {
+		A := F{X: -1, Y: 0}
+		B := F{X: 1, Y: 0}
+		P := F{X: 0.5, Y: 0}
+
+		closest, ratio := ClosestPointOnLineSegmentF(A, B, P)
+		assert.Equal(t, F{0.5, 0}, closest)
+		assert.Equal(t, float32(0.75), ratio)
+	})
+}
